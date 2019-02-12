@@ -14,5 +14,5 @@ func InitSql() {
 	dbname   := "go_notebook"
 
 	orm.Debug = true
-	orm.RegisterDataBase("default", "mysql",fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8", user,password, host, port, dbname))
+	orm.RegisterDataBase("default", "mysql", fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8", user,password, host, port, dbname))
 }
