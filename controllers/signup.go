@@ -24,23 +24,7 @@ func init() {
 	orm.RegisterModel(new(User))
 }
 
+// 注册接口
 func (c *SignupController) Post() {
-	username := c.Input().Get("username")
-	password := c.Input().Get("password")
-	o := orm.NewOrm()
-	var user User
-	user.Username = username
-	user.Password = password
-	User.
-	id, err := o.Insert(&user)
-	fmt.Println(id)
-	if err == nil {
-		response := models.ResponseBody{
-			Code: true,
-			Text: "注册成功",
-			Data: id,
-		}
-		c.Data["json"] = &response
-		c.ServeJSON()
-	}
+
 }
