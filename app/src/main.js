@@ -2,12 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import ButtonComponent from './components/Button.vue'
-import InputCoponent from './components/Input'
+import InputComponent from './components/Input'
 
 Vue.config.productionTip = false
 
 Vue.component('ButtonComponent', ButtonComponent)
-Vue.component('InputCoponent', InputCoponent)
+Vue.component('InputComponent', InputComponent)
 
 new Vue({
   router,

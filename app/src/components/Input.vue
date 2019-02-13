@@ -1,8 +1,10 @@
 <template>
   <div class="input-wrapper">
     <input
+      :class="['input-' + size]"
       :placeholder="placeholder"
       :value="value"
+      :type="type"
       @input="$emit('input', $event.target.value)">
     <i
       v-if="value !== '' && clearable"
@@ -13,6 +15,10 @@
 <script>
 export default {
   props: {
+    type: {
+      type: String,
+      default: 'text'
+    },
     value: {
       type: [String, Number],
       default: ''
@@ -24,7 +30,12 @@ export default {
     clearable: {
       type: Boolean,
       default: false
-    }
+    },
+    // 参数： 默认，large,small
+    size: {
+      type: String,
+      default: 'normal'
+    },
   },
   methods: {
     clearInput: function () {
@@ -71,6 +82,10 @@ export default {
       border: 1px solid @color-primary-hover;
       box-shadow: 0 0 0 2px rgba(45,140,240,.2);
     }
+  }
+
+  .input-large {
+    height: 40px;
   }
 
   i {

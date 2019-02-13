@@ -1,17 +1,87 @@
 <template>
-  <div class="register-component">
-    <ButtonComponent type="success" size="large" long>登录</ButtonComponent>
+  <div class="main-wrapper">
+    <div class="signin-wrapper">
+      <div class="tab">
+        <router-link class="link" to="/login" title="登录">
+          <h4>登录</h4>
+        </router-link>
+        <span></span>
+        <router-link class="active link" to="/register" title="注册">
+          <h4>注册</h4>
+        </router-link>
+      </div>
+      <InputComponent class="input" size="large" v-model.trim="username" placeholder="请输入用户名" />
+      <InputComponent class="input" size="large" v-model.trim="password" type="password" placeholder="请输入密码" />
+      <InputComponent class="input" size="large" v-model.trim="password" type="password" placeholder="请再次输入密码" />
+      <ButtonComponent class="submit-button" type="success" size="large" long>注册</ButtonComponent>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {
+  
+}
 </script>
 
 <style scoped>
-.register-component {
-  
+.main-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #fff;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-box-align: center;
+}
+.signin-wrapper {
+  width: 330px;
+  padding: 30px 40px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 10px 40px -2px rgba(0, 64, 128, 0.2);
+}
+.signin-wrapper .tab {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #2c3e50;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.signin-wrapper .tab .link {
+  color: #999;
+  margin: 0 14px;
+}
+.signin-wrapper .tab .active {
+  color: #2db7f5;
+}
+.signin-wrapper .tab span {
+  width: 2px;
+  height: 17px;
+  background: #999;
+}
+.signin-wrapper .ivu-input-wrapper {
+  margin: 6px 0;
+}
+.signin-wrapper .ivu-btn {
+  margin: 6px 0;
+}
+.signin-wrapper .password-text {
+  margin: 10px 0;
+  float: right;
+}
+.signin-wrapper .password-text a {
+  color: #ed4014;
+}
+.input {
+  width: 100%;
+  margin: 0 0 10px;
+}
+.submit-button {
+  margin: 16px 0 0;
 }
 </style>
