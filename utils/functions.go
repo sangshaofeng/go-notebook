@@ -11,7 +11,7 @@ import (
 )
 
 // 检查用户名是否合法，只接受数字和字母，且第一位非数字
-func CheckUsernme(username string) bool {
+func CheckUsername(username string) bool {
 	if username[0] >= '0' && username[0] <= '9' {
 		return false
 	}

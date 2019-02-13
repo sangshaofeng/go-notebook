@@ -3,28 +3,31 @@ package controllers
 
 import (
 	"fmt"
-	// "encoding/json"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
-	"go-notebook/models"
+	. "go-notebook/models"
+	"go-notebook/utils"
 )
 
 type SignupController struct {
 	beego.Controller
 }
 
-type User struct {
-	Id int
-	Username string
-	Password string
-}
-
-func init() {
-	orm.RegisterModel(new(User))
-}
-
 // 注册接口
 func (c *SignupController) Post() {
-
+	username := c.GetString("username")
+	password := c.GetString("password")
+	if !utils.CheckUsername(username) {
+		c.Data["json"] = map[string]interface{}{"result": false, "msg": "illegal username", "refer": "/"}
+		c.ServeJSON()
+		return
+	}
+	id, err := AddUser(username, password)
+	fmt.Println(id, err)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"result": false, "msg": "registor failed", "refer": "/"}
+	} else {
+		c.Data["json"] = map[string]interface{}{"result": true, "msg": fmt.Sprintf("[%d] ", id) + "registor success", "refer": "/"}
+	}
+	c.ServeJSON()
 }
