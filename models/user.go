@@ -1,6 +1,7 @@
 package models
 
 import (
+	"time"
 	"go-notebook/utils"
 	"github.com/astaxie/beego/orm"
 )
@@ -10,6 +11,7 @@ type Users struct {
 	Username string
 	Password string
 	Salt string
+	CreatedAt int64
 }
 
 func init() {
@@ -24,6 +26,7 @@ func AddUser(username string, password string) (int64, error) {
 	user.Username = username
 	user.Salt = utils.RandString(10)
 	user.Password = utils.Md5(password + user.Salt)
+	user.CreatedAt = time.Now().Unix()
 	return o.Insert(user)
 }
 
@@ -35,3 +38,7 @@ func FindUser(username string) (Users, error) {
 	err := o.Read(&user, "username")
 	return user, err
 }
+
+// 登录
+
+// 修改密码

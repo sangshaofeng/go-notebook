@@ -13,21 +13,20 @@ type SignupController struct {
 	beego.Controller
 }
 
-// 注册接口
+// 注册
 func (c *SignupController) Post() {
 	username := c.GetString("username")
 	password := c.GetString("password")
 	if !utils.CheckUsername(username) {
-		c.Data["json"] = map[string]interface{}{"result": false, "msg": "illegal username", "refer": "/"}
+		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "illegal username", }
 		c.ServeJSON()
 		return
 	}
 	id, err := AddUser(username, password)
-	fmt.Println(id, err)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"result": false, "msg": "registor failed", "refer": "/"}
+		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "注册失败",}
 	} else {
-		c.Data["json"] = map[string]interface{}{"result": true, "msg": fmt.Sprintf("[%d] ", id) + "registor success", "refer": "/"}
+		c.Data["json"] = map[string]interface{}{"code": 1, "msg": fmt.Sprintf("[%d] ", id) + "注册成功", }
 	}
 	c.ServeJSON()
 }
