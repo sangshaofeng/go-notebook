@@ -13,14 +13,38 @@
       <InputComponent class="input" size="large" v-model.trim="username" placeholder="请输入用户名" />
       <InputComponent class="input" size="large" v-model.trim="password" type="password" placeholder="请输入密码" />
       <InputComponent class="input" size="large" v-model.trim="password" type="password" placeholder="请再次输入密码" />
-      <ButtonComponent class="submit-button" type="success" size="large" long>注册</ButtonComponent>
+      <Button @click="register" :type="buttonType"  :disabled="isButtonDisabled" long>{{buttonText}}</Button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  
+  data() {
+    return {
+      buttonType: 'success',
+      buttonText: '注册',
+      isButtonDisabled: false,
+      username: '',
+      password: '',
+      confirmPassword: '',
+      isOnRegister: false,    // 是否正在请求中
+    }
+  },
+  methods: {
+    register() {
+      if (this.isOnRegister) {
+        return 
+      }
+      this.isButtonDisabled = true
+      this.buttonText = "请求中..."
+      setTimeout(() => {
+        this.isButtonDisabled = false
+        this.buttonText = "注册"
+        this.$Message.warning('This is a warning tip');
+      }, 2000)
+    }
+  },
 }
 </script>
 
@@ -29,7 +53,7 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: #fff;
+  background-color: rgb(247, 247, 247);
   display: flex;
   display: -webkit-flex;
   justify-content: center;
