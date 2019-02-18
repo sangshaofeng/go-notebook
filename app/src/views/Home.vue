@@ -2,15 +2,20 @@
   <div class="home">
     <Header/>
     <div class="main-content-wrapper">
+      <!--左侧部分-->
       <div class="left-wrapper">
         <div class="head">
           <h4>文档目录</h4>
-          <Button type="text" icon="md-add">新建</Button>
+          <Button @click="showAddModal" type="text" icon="md-add">新建</Button>
         </div>
         <ul class="cate-list">
           <li>
             <Icon type="md-folder" />
-            <span>前端</span>
+            <span>全部文档(不限目录)</span>
+          </li>
+          <li>
+            <Icon type="md-folder" />
+            <span>前端知识大全</span>
           </li>
           <li>
             <Icon type="md-folder" />
@@ -18,18 +23,46 @@
           </li>
           <li>
             <Icon type="md-folder" />
-            <span>后端</span>
-          </li>
-          <li>
-            <Icon type="md-folder" />
-            <span>后端2017-10-10</span>
+            <span>Golang学习笔记</span>
           </li>
         </ul>
       </div>
+      <!--右侧部分-->
       <div class="right-wrapper">
-        <Spin fix></Spin>
+        <div class="head">
+          <h4>全部文档</h4>
+        </div>
+        <ul class="doc-list">
+          <li>
+            <a>标题比套题的温暖我你的空间瓦达瓦但您翁科技枪</a>
+            <p>对不起框架的那位情况电脑是空前的五年前分开为单位群你离开我带你玩起来看到那位动能武器可能得蔚蓝群岛五千年的完全离开你带我去了带你玩起来多难为情的为</p>
+            <div class="bottom">
+              <span>创建时间：2018-12-20</span>
+              <span>更新时间：2018-12-20</span>
+              <span>用户：sangshaofeng</span>
+            </div>
+          </li>
+          <li>
+            <a>标题比套题的温暖我你的空间瓦达瓦但您翁科技枪</a>
+            <p>对不起框架的那位情况电脑是空前的五年前分开为单位群你离开我带你玩起来看到那位动能武器可能得蔚蓝群岛五千年的完全离开你带我去了带你玩起来多难为情的为</p>
+            <div class="bottom">
+              <span>创建时间：2018-12-20</span>
+              <span>更新时间：2018-12-20</span>
+              <span>用户：sangshaofeng</span>
+            </div>
+          </li>
+          <Button style="margin-top:20px;" type="default" long>加载更多</Button>
+        </ul>
       </div>
     </div>
+    <Modal
+        v-model="isModalShow"
+        :mask-closable="false"
+        title="新建文档目录"
+        @on-ok="submitCatalogName"
+        @on-cancel="closeModal">
+        <Input v-model="value" placeholder="输入目录名称" />
+    </Modal>
   </div>
 </template>
 
@@ -41,9 +74,20 @@ export default {
   },
   data () {
     return {
-      
+      isModalShow: false,
     }
-  }
+  },
+  methods: {
+    showAddModal () {
+      this.isModalShow = true
+    },
+    submitCatalogName () {
+
+    },
+    closeModal () {
+      this.isModalShow = false
+    }
+  },
 }
 </script>
 
@@ -64,17 +108,17 @@ export default {
     align-items: flex-start;
     .left-wrapper {
       display: inline-block;
-      width: 280px;
+      width: 250px;
       min-height: 280px;
       background: #fff;
-      padding: 10px;
+      padding: 6px 14px 10px;
       border-radius: 4px;
       box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
       position: relative;
       .head {
         height: 34px;
         line-height: 34px;
-        border-bottom: 1px solid #f8f8f9;
+        border-bottom: 1px solid #eee;
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
@@ -85,10 +129,14 @@ export default {
         max-height: 400px;
         overflow: auto;
         li {
+          width: 100%;
           font-size: 14px;
           height: 28px;
           line-height: 28px;
           cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           transition: all 0.3s ease-in-out;
           &:hover {
             color: #2d8cf0;
@@ -102,13 +150,50 @@ export default {
     .right-wrapper {
       display: inline-block;
       margin-left: 20px;
-      width: 700px;
+      width: 730px;
       min-height: 180px;
       background: #fff;
-      padding: 10px;
+      padding: 6px 14px 20px;
       border-radius: 4px;
       box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
       position: relative;
+      .head {
+        height: 34px;
+        line-height: 34px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .doc-list {
+        width: 100%;
+        margin-top: 6px;
+        font-size: 14px;
+        li {
+          padding: 10px 0;
+          border-bottom: 1px solid #eee;
+          a {
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              color: #2d8cf0 !important;
+            }
+          }
+          p {
+            margin-top: 10px;
+            color: #777777;
+          }
+          .bottom {
+            margin-top: 10px;
+            span {
+              font-size: 12px;
+              margin-right: 10px;
+              color: #777777;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -15,6 +15,9 @@ body {
 ul {
   list-style: none;
 }
+a {
+  color: #515a6e !important;
+}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
