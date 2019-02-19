@@ -21,5 +21,10 @@ export default new Router({
       name: 'register',
       component: () => import('./views/Register.vue')
     },
+    {
+      path: '/personalPage',
+      name: 'personalPage',
+      component: () => import('./views/PersonalPage.vue')
+    },
   ]
 })

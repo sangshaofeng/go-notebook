@@ -8,7 +8,10 @@
               <img class="avatar" src="../assets/logo.png" alt="logo">
             </template>
             <MenuItem name="3-1">
-              <router-link to="">个人主页</router-link>
+              <router-link to="/">首页</router-link>
+            </MenuItem>
+            <MenuItem name="3-1">
+              <router-link to="/personalPage">个人主页</router-link>
             </MenuItem>
             <MenuItem name="3-1">
               <router-link to="">新建文档</router-link>
@@ -23,9 +26,9 @@
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {
+  
+}
 </script>
 
 <style lang="less" scoped>
