@@ -24,7 +24,7 @@ func (c *SignupController) Post() {
 	}
 	id, err := AddUser(username, password)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "注册失败",}
+		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "注册失败", "data": err}
 	} else {
 		c.Data["json"] = map[string]interface{}{"code": 1, "msg": fmt.Sprintf("[%d] ", id) + "注册成功", }
 	}
