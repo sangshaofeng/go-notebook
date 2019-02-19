@@ -176,6 +176,7 @@ export default {
           a {
             font-weight: bold;
             transition: all 0.3s ease-in-out;
+            color: #515a6e;
             &:hover {
               color: #2d8cf0 !important;
             }

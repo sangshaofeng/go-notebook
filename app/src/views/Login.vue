@@ -12,7 +12,7 @@
       </div>
       <InputComponent class="input" size="large" v-model.trim="username" placeholder="请输入用户名" />
       <InputComponent class="input" size="large" v-model.trim="password" type="password" placeholder="请输入密码" />
-      <Button :type="buttonType"  :disabled="isButtonDisabled" long>{{buttonText}}</Button>
+      <Button @click="login" :type="buttonType"  :disabled="isButtonDisabled" long>{{buttonText}}</Button>
     </div>
   </div>
 </template>
@@ -22,12 +22,27 @@ export default {
   data() {
     return {
       buttonType: 'primary',
-      buttonText: '注册',
+      buttonText: '登录',
       isButtonDisabled: false,
       username: '',
       password: '',
       confirmPassword: '',
       isOnLogin: false,    // 是否正在登录中
+    }
+  },
+  methods: {
+    login () {
+      if (this.isOnLogin) return
+      this.buttonText = '登录中...'
+      this.isButtonDisabled = true
+      this.isOnLogin = true
+      var me = this
+      this.$axios.post('/login', {
+        username: me.username,
+        password: me.password
+      }).then(res => {
+        
+      })
     }
   },
 }
@@ -46,7 +61,7 @@ export default {
   -webkit-box-align: center;
 }
 .signin-wrapper {
-  width: 330px;
+  width: 400px;
   padding: 30px 40px;
   background: #fff;
   border-radius: 6px;

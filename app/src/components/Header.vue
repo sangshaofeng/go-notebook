@@ -14,7 +14,7 @@
               <router-link to="">新建文档</router-link>
             </MenuItem>
             <MenuItem name="3-1">
-              <router-link to="">登出</router-link>
+              <router-link to="/login">登出</router-link>
             </MenuItem>
         </Submenu>
       </Menu>

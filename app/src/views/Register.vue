@@ -61,7 +61,7 @@ export default {
   -webkit-box-align: center;
 }
 .signin-wrapper {
-  width: 330px;
+  width: 400px;
   padding: 30px 40px;
   background: #fff;
   border-radius: 6px;

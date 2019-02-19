@@ -16,7 +16,7 @@ ul {
   list-style: none;
 }
 a {
-  color: #515a6e !important;
+  color: #515a6e;
 }
 #app {
   -webkit-font-smoothing: antialiased;
