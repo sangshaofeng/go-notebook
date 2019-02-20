@@ -56,3 +56,12 @@ func (c *LoginController) Post() {
 	}
 	c.ServeJSON()
 }
+
+// 修改资料：上传头像，修改昵称
+type EditUserInfoController struct {
+	beego.Controller
+}
+
+func (c *EditUserInfoController) Post() {
+	
+}

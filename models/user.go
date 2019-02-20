@@ -10,6 +10,8 @@ type Users struct {
 	Username string
 	Password string
 	Salt string
+	Nickname string
+	Avatar string
 }
 
 func init() {
@@ -36,6 +38,17 @@ func FindUser(username string) (Users, error) {
 	return user, err
 }
 
-// 登录
-
-// 修改密码
+// 编辑资料：上传头像，修改昵称
+func AlterUserInfo(id int, avatar string, nickname string) (int64, error) {
+	o := orm.NewOrm()
+	o.Using("default")
+	user := Users{Id: id}
+	err := o.Read(&user)
+	var num int64
+	if err == nil {
+		user.Nickname = nickname
+		user.Avatar = avatar
+		num, err = o.Update(&user, "nickname", "avatar")
+	}
+	return num, err
+}
