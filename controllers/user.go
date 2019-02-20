@@ -1,12 +1,36 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
+	_ "github.com/go-sql-driver/mysql"
 	. "go-notebook/models"
 	"go-notebook/utils"
-	"fmt"
 )
 
+// 注册
+type RegisterController struct {
+	beego.Controller
+}
+
+func (c *RegisterController) Post() {
+	username := c.GetString("username")
+	password := c.GetString("password")
+	if !utils.CheckUsername(username) {
+		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "用户名格式错误", }
+		c.ServeJSON()
+		return
+	}
+	id, err := AddUser(username, password)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "注册失败", "data": err}
+	} else {
+		c.Data["json"] = map[string]interface{}{"code": 1, "msg": fmt.Sprintf("[%d] ", id) + "注册成功", }
+	}
+	c.ServeJSON()
+}
+
+// 登录
 type LoginController struct {
 	beego.Controller
 }
