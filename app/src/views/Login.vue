@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   data() {
     return {
@@ -37,11 +38,19 @@ export default {
       this.isButtonDisabled = true
       this.isOnLogin = true
       var me = this
-      this.$axios.post('/login', {
+      this.$axios.post('/api/login', qs.stringify({
         username: me.username,
         password: me.password
-      }).then(res => {
-        
+      })).then(res => {
+        this.buttonText = '登录'
+        this.isButtonDisabled = false
+        this.isOnLogin = false
+        this.$Message.success(res.data.msg);
+        if (res.data.code == 1) {
+          setTimeout(() => {
+            this.$router.push({ path: '/' })
+          }, 1000)
+        }
       })
     }
   },
