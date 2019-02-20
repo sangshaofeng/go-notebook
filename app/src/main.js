@@ -14,6 +14,17 @@ Vue.use(iView);
 Vue.component('ButtonComponent', ButtonComponent)
 Vue.component('InputComponent', InputComponent)
 
+// 响应拦截器
+// axios.interceptors.response.use(
+//   response => {
+//     const status = response.data.status
+//     switch (status) {
+//       case 500:
+//         router.push({path: '/login'})
+//     }
+//   }
+// )
+
 Vue.prototype.$axios = axios
 
 new Vue({
