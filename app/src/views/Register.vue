@@ -12,13 +12,14 @@
       </div>
       <InputComponent class="input" size="large" v-model.trim="username" placeholder="请输入用户名" />
       <InputComponent class="input" size="large" v-model.trim="password" type="password" placeholder="请输入密码" />
-      <InputComponent class="input" size="large" v-model.trim="password" type="password" placeholder="请再次输入密码" />
+      <InputComponent class="input" size="large" v-model.trim="confirmPassword" type="password" placeholder="请再次输入密码" />
       <Button @click="register" :type="buttonType"  :disabled="isButtonDisabled" long>{{buttonText}}</Button>
     </div>
   </div>
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   data() {
     return {
@@ -33,16 +34,41 @@ export default {
   },
   methods: {
     register() {
-      if (this.isOnRegister) {
-        return 
-      }
+      if (this.isOnRegister) return
+      if (!this.checkoutPassword()) return
       this.isButtonDisabled = true
       this.buttonText = "请求中..."
-      setTimeout(() => {
+      this.isOnRegister = true
+      var me = this
+      this.$axios.post('/api/register', qs.stringify({
+        username: me.username,
+        password: me.password
+      })).then(res => {
+        this.buttonText = '注册'
         this.isButtonDisabled = false
-        this.buttonText = "注册"
-        this.$Message.warning('This is a warning tip');
-      }, 2000)
+        this.isOnRegister = false
+        this.$Message.success(res.data.msg)
+        if (res.data.data.Number == 1062) {
+          this.$Message.success('用户名已存在')
+        }
+        if (res.data.code == 1) {
+          setTimeout(() => {
+            this.$router.push({ path: '/login' })
+          }, 1000)
+        }
+      })
+    },
+
+    checkoutPassword () {
+      if (this.username === '' || this.password === '' || this.confirmPassword == '') {
+        this.$Message.warning('用户名和密码不能为空');
+        return false
+      }
+      if (this.password !== this.confirmPassword) {
+        this.$Message.warning('两次输入的密码不一致');
+        return false
+      }
+      return true
     }
   },
 }
