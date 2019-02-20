@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import {checkoutLogin} from './utils/utils'
 
 Vue.use(Router)
 
@@ -9,7 +10,13 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {title: "首页"},
+      beforeEnter: (to, from, next) => {
+        if (!checkoutLogin()) {
+          next('/login')
+        } else next()
+      }
     },
     {
       path: '/login',
