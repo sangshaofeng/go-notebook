@@ -48,13 +48,23 @@ export default {
         this.isButtonDisabled = false
         this.isOnRegister = false
         this.$Message.success(res.data.msg)
-        if (res.data.data.Number == 1062) {
-          this.$Message.success('用户名已存在')
-        }
         if (res.data.code == 1) {
           setTimeout(() => {
             this.$router.push({ path: '/login' })
           }, 1000)
+        } else if (res.data.code == 0) {
+          if (res.data.data.Number == 1062) {
+            this.$Message.success('用户名已存在')
+          }
+        }
+      }).catch(error => {
+        this.buttonText = '登录'
+        this.isButtonDisabled = false
+        this.isOnLogin = false
+        if (error.response) {
+          this.$Message.warning(error.response.status + ' ' + error.response.statusText)
+        } else {
+          this.$Message.warning(error.message)
         }
       })
     },

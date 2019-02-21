@@ -35,6 +35,7 @@ export default {
   methods: {
     login () {
       if (this.isOnLogin) return
+      if (!this.checkout()) return
       this.buttonText = '登录中...'
       this.isButtonDisabled = true
       this.isOnLogin = true
@@ -53,7 +54,24 @@ export default {
             this.$router.push({ path: '/' })
           }, 1000)
         }
+      }).catch(error => {
+        this.buttonText = '登录'
+        this.isButtonDisabled = false
+        this.isOnLogin = false
+        if (error.response) {
+          this.$Message.warning(error.response.status + ' ' + error.response.statusText)
+        } else {
+          this.$Message.warning(error.message)
+        }
       })
+    },
+
+    checkout () {
+      if (this.username === '' || this.password === '') {
+        this.$Message.warning('用户名和密码不能为空');
+        return false
+      }
+      return true
     }
   },
 }
