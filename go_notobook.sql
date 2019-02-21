@@ -1,0 +1,52 @@
+-- 创建go_article数据库
+CREATE DATABASE IF NOT EXISTS `go_notebook`;
+USE `go_notebook`;
+
+
+-- 创建users表结构
+CREATE TABLE IF NOT EXISTS `users`(
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '用户名',
+	`password` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '密码',
+	`salt` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '盐',
+	`nickname` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '昵称',
+	`avatar` BLOB NOT NULL COMMENT '头像',
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '时间戳',	
+	PRIMARY KEY(`id`),
+	UNIQUE KEY `username` (`username`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+-- 创建文档目录doc_contents表结构
+CREATE TABLE IF NOT EXISTS `doc_contents`(
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '目录名称',
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	PRIMARY KEY(`id`),
+	UNIQUE KEY `name` (`name`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+-- 创建documents表结构
+CREATE TABLE IF NOT EXISTS `documents`(
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`content_id` int(11) NOT NULL COMMENT '目录id',
+	`title` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '标题',
+	`content` LONGTEXT COMMENT '正文',
+	`keywords` VARCHAR(255) DEFAULT '' COMMENT '关键词',
+	`abstract` VARCHAR(255) DEFAULT '' COMMENT '概要',
+ 	`author` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '作者',
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+	PRIMARY KEY(`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 创建用户收藏文档表结构
+CREATE TABLE IF NOT EXISTS `user_collections`(
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL COMMENT '用户id',
+	`collct_doc_id` int(11) NOT NULL COMMENT '收藏文档id',
+	`created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	PRIMARY KEY(`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
