@@ -19,6 +19,7 @@
 
 <script>
 import qs from 'qs'
+import {setUsername} from '../utils/utils'
 export default {
   data() {
     return {
@@ -47,6 +48,7 @@ export default {
         this.isOnLogin = false
         this.$Message.success(res.data.msg);
         if (res.data.code == 1) {
+          setUsername(this.username)
           setTimeout(() => {
             this.$router.push({ path: '/' })
           }, 1000)

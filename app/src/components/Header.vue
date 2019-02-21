@@ -3,31 +3,46 @@
     <div class="content-wrapper">
       <Menu mode="horizontal" active-name="1">
         <h4>文档管理</h4>
-        <Submenu name="3" class="avatar-wrapper">
-            <template slot="title">
-              <img class="avatar" src="../assets/logo.png" alt="logo">
-            </template>
-            <MenuItem name="3-1">
+        <Dropdown class="avatar-wrapper" @on-click="handleDropdownMenu">
+          <a href="javascript:void(0)">
+            <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" style="margin-right:6px;" />
+          </a>
+          <DropdownMenu slot="list">
+            <DropdownItem name="toHome">
               <router-link to="/">首页</router-link>
-            </MenuItem>
-            <MenuItem name="3-1">
+            </DropdownItem>
+            <DropdownItem name="toPersonalPage">
               <router-link to="/personalPage">个人主页</router-link>
-            </MenuItem>
-            <MenuItem name="3-1">
-              <router-link to="">新建文档</router-link>
-            </MenuItem>
-            <MenuItem name="3-1">
-              <router-link to="/login">登出</router-link>
-            </MenuItem>
-        </Submenu>
+            </DropdownItem>
+            <DropdownItem name="toCreateDoc">
+              <router-link to="/">创建文档</router-link>
+            </DropdownItem>
+            <DropdownItem name="toLogin">
+              <span>登出</span>
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </Menu>
     </div>
   </div>
 </template>
 
 <script>
+import {removeUsername} from '../utils/utils'
 export default {
-  
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+    handleDropdownMenu (name) {
+      if (name === 'toLogin') {
+        removeUsername()
+        this.$router.push({ path: '/login' })
+      }
+    },
+  },
 }
 </script>
 
@@ -62,9 +77,12 @@ a {
     }
     .avatar-wrapper {
       float: right;
-      .avatar {
-        width: 30px;
-        vertical-align: middle;
+      a {
+        display: block;
+        img {
+          width: 30px;
+          vertical-align: middle;
+        }
       }
     }
 
