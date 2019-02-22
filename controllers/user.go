@@ -57,11 +57,69 @@ func (c *LoginController) Post() {
 	c.ServeJSON()
 }
 
-// 修改资料：上传头像，修改昵称
+// 修改资料：上传头像，修改昵称 & 获取用户资料
 type EditUserInfoController struct {
 	beego.Controller
 }
 
+func (c *EditUserInfoController) Get() {
+	user := c.GetSession("username")
+	if user == nil {
+		c.Data["json"] = map[string]interface{}{"code": 1001, "msg": "未登录",}
+		c.ServeJSON()
+		return
+	}
+	id, err := c.GetInt("id")
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "缺少id",}
+		c.ServeJSON()
+		return
+	}
+	userInfo, err := FindUserById(id)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{
+			"code": 0, 
+			"msg": "请求失败", 
+			"data": err,
+		}
+	} else {
+		c.Data["json"] = map[string]interface{}{
+			"code": 1,
+			"msg": "请求成功",
+			"data": userInfo,
+		}
+	}
+	c.ServeJSON()
+}
+
 func (c *EditUserInfoController) Post() {
-	
+	user := c.GetSession("username")
+	if user == nil {
+		c.Data["json"] = map[string]interface{}{"code": 1001, "msg": "未登录",}
+		c.ServeJSON()
+		return
+	}
+	id, err := c.GetInt("id")
+	avatar := c.GetString("avatar")
+	nickname := c.GetString("nickname")
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{"code": 0, "msg": "缺少id",}
+		c.ServeJSON()
+		return
+	}
+	num, err := AlterUserInfo(id, avatar, nickname)
+	if err != nil {
+		c.Data["json"] = map[string]interface{}{
+			"code": 0, 
+			"msg": "请求失败", 
+			"data": err,
+		}
+	} else {
+		c.Data["json"] = map[string]interface{}{
+			"code": 1, 
+			"msg": "请求成功",
+			"data": num,
+		}
+	}
+	c.ServeJSON()
 }

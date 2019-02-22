@@ -38,6 +38,15 @@ func FindUser(username string) (Users, error) {
 	return user, err
 }
 
+// 根据id查找用户
+func FindUserById(id int) ([]orm.Params, error) {
+	o := orm.NewOrm()
+	sql := "select id,username,nickname,avatar,created_at from users where id=?"
+	var user []orm.Params
+	_, err := o.Raw(sql, id).Values(&user)
+	return user, err
+}
+
 // 编辑资料：上传头像，修改昵称
 func AlterUserInfo(id int, avatar string, nickname string) (int64, error) {
 	o := orm.NewOrm()

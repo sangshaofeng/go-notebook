@@ -12,4 +12,6 @@ func init() {
 	beego.Router("/api/login", &controllers.LoginController{})
 	// 添加&获取文档目录接口
 	beego.Router("/api/docContent", &controllers.DocContentController{})
+	// 用户资料编辑接口
+	beego.Router("/api/userInfo", &controllers.EditUserInfoController{})
 }
