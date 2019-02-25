@@ -4,6 +4,7 @@
     <div class="main-content-wrapper">
       <!--左侧部分-->
       <div class="left-wrapper">
+        <Spin size="large" fix v-show="isDocContentLoading"></Spin>
         <div class="head">
           <h4>文档目录</h4>
           <Button @click="showAddModal" type="text" icon="md-add">新建</Button>
@@ -23,6 +24,7 @@
       </div>
       <!--右侧部分-->
       <div class="right-wrapper">
+        <Spin size="large" fix v-show="isDocsListLoading"></Spin>
         <div class="head">
           <h4>全部文档</h4>
         </div>
@@ -55,12 +57,13 @@
         title="新建文档目录"
         @on-ok="submitCatalogName"
         @on-cancel="closeModal">
-        <Input v-model="value" placeholder="输入目录名称" />
+        <Input v-model="docContentName" placeholder="输入目录名称" />
     </Modal>
   </div>
 </template>
 
 <script>
+import qs from 'qs'
 import Header from '../components/Header'
 export default {
   components: {
@@ -69,9 +72,12 @@ export default {
   data () {
     return {
       isModalShow: false,
+      isDocContentLoading: true,
+      isDocsListLoading: true,
       currentContentPage: 1,
       totalContentPages: '',
       docContentsList: [],
+      docContentName: '',
     }
   },
   created() {
@@ -83,7 +89,7 @@ export default {
     },
 
     submitCatalogName () {
-
+      this.newDocContent(this.docContentName)
     },
 
     closeModal () {
@@ -102,20 +108,32 @@ export default {
     // 获取全部文档目录
     getDocsContent (page) {
       this.$axios.get('/api/docContent?page=' + page).then(res => {
+        this.isDocContentLoading = false
         res.data.data.forEach(item => {
           this.docContentsList.push(item)
         });
         this.totalContentPages = res.data.totalPages
       })
-    }
+    },
+
+    // 新建文档目录
+    newDocContent (name) {
+      this.$Message.loading({
+        content: '提交中',
+        duration: 0
+      })
+      this.$axios.post('/api/docContent', qs.stringify({name: name})).then(res => {
+        if (res.data.code == 1) {
+          this.$Message.destroy()
+          this.$Message.success('创建成功')
+        }
+      })
+    },
   },
 }
 </script>
 
 <style lang="less" scoped>
-.ivu-spin-fix {
-  background: transparent;
-}
 .home {
   .main-content-wrapper {
     width: 1000px;
