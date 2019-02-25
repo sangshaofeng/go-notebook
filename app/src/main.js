@@ -15,15 +15,17 @@ Vue.component('ButtonComponent', ButtonComponent)
 Vue.component('InputComponent', InputComponent)
 
 // 响应拦截器
-// axios.interceptors.response.use(
-//   response => {
-//     const status = response.data.status
-//     switch (status) {
-//       case 500:
-//         router.push({path: '/login'})
-//     }
-//   }
-// )
+axios.interceptors.response.use(
+  response => {
+    const code = response.data.code
+    switch (code) {
+      case 1001:
+        router.push({path: '/login'})
+        break
+    }
+    return response
+  }
+)
 
 Vue.prototype.$axios = axios
 

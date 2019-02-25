@@ -13,18 +13,12 @@
             <Icon type="md-folder" />
             <span>全部文档(不限目录)</span>
           </li>
-          <li>
+          <li v-for="(item, index) in docContentsList" :key="index">
             <Icon type="md-folder" />
-            <span>前端知识大全</span>
+            <span>{{item.name}}</span>
           </li>
-          <li>
-            <Icon type="md-folder" />
-            <span>前端2017-10-10</span>
-          </li>
-          <li>
-            <Icon type="md-folder" />
-            <span>Golang学习笔记</span>
-          </li>
+          <Button v-show="currentContentPage < totalContentPages" @click="loadMoreContents" style="margin:10px 0;" type="default" long>加载更多</Button>
+          <p v-show="currentContentPage >= totalContentPages" style="margin:14px 0;text-align:center;color:#999">没有更多了</p>
         </ul>
       </div>
       <!--右侧部分-->
@@ -75,17 +69,44 @@ export default {
   data () {
     return {
       isModalShow: false,
+      currentContentPage: 1,
+      totalContentPages: '',
+      docContentsList: [],
     }
+  },
+  created() {
+    this.getDocsContent(this.currentContentPage)
   },
   methods: {
     showAddModal () {
       this.isModalShow = true
     },
+
     submitCatalogName () {
 
     },
+
     closeModal () {
       this.isModalShow = false
+    },
+
+    // 加载更多
+    loadMoreContents () {
+      if (this.currentContentPage == this.totalContentPages) {
+        return
+      }
+      this.currentContentPage ++
+      this.getDocsContent(this.currentContentPage)
+    },
+
+    // 获取全部文档目录
+    getDocsContent (page) {
+      this.$axios.get('/api/docContent?page=' + page).then(res => {
+        res.data.data.forEach(item => {
+          this.docContentsList.push(item)
+        });
+        this.totalContentPages = res.data.totalPages
+      })
     }
   },
 }
@@ -126,7 +147,7 @@ export default {
       }
       .cate-list {
         margin-top: 12px;
-        max-height: 400px;
+        max-height: 500px;
         overflow: auto;
         li {
           width: 100%;
