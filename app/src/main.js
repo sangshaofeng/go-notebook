@@ -6,6 +6,7 @@ import InputComponent from './components/Input'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import axios from 'axios'
+import {removeUsername} from './utils/utils'
 
 Vue.config.productionTip = false
 
@@ -20,6 +21,7 @@ axios.interceptors.response.use(
     const code = response.data.code
     switch (code) {
       case 1001:
+        removeUsername()
         router.push({path: '/login'})
         break
     }
