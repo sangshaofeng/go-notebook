@@ -38,5 +38,15 @@ export default new Router({
         } else next()
       }
     },
+    {
+      path: '/editDocument',
+      name: 'editDocument',
+      component: () => import('./views/EditDocument.vue'),
+      beforeEnter: (to, from, next) => {
+        if (!checkoutLogin()) {
+          next('/login')
+        } else next()
+      }
+    },
   ]
 })

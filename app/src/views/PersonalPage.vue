@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="right-wrapper">
-
+        
       </div>
     </div>
   </div>
