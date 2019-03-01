@@ -15,7 +15,7 @@
               <router-link to="/personalPage">个人主页</router-link>
             </DropdownItem>
             <DropdownItem name="toCreateDoc">
-              <router-link to="/">创建文档</router-link>
+              <router-link to="/editDocument">创建文档</router-link>
             </DropdownItem>
             <DropdownItem name="toLogin">
               <span>登出</span>

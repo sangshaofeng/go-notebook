@@ -5,11 +5,8 @@
       <div class="left-wrapper">
         <div class="user-info">
           <img src="../assets/logo.png" alt="">
-          <Upload action="//jsonplaceholder.typicode.com/posts/" style="margin-top:12px;">
-            <Button icon="ios-cloud-upload-outline">上传头像</Button>
-          </Upload>
           <p class="nickname">昵称：sangshaofeng</p>
-          <Button style="margin-top:12px;">修改昵称</Button>
+          <Button style="margin-top:12px;">修改资料</Button>
         </div>
         <div class="user-doc">
           <ul>
@@ -50,7 +47,7 @@ export default {
     width: 250px;
     .user-info {
       width: 100%;
-      min-height: 230px;
+      min-height: 200px;
       padding: 6px 14px 20px;
       border-radius: 4px;
       background: #fff;
